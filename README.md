@@ -70,7 +70,9 @@ This repository contains the code and data about the project:
 
 ### 1. **ELI5 (Explain Like I’m 5)**
 
-- **类型**: 问答数据集
+- **类型**: Long-Form 问答数据集，generative question
+- **实验设置：** generate short
+- **测试指标：** uni-gram F1
 - **描述**: ELI5 数据集来自 Reddit 的 "Explain Like I'm 5" 子版块，问题通常是用户提出的开放性问题，回答者尝试以简单、易懂的方式来解释复杂问题。这个数据集的重点是生成长篇的答案，适合生成式任务和信息检索任务。
 - **应用场景**: 用于开放域问答，尤其是在需要生成解释性答案的场景下。
 
@@ -126,6 +128,7 @@ This repository contains the code and data about the project:
 ### 2. **FEVER (Fact Extraction and VERification)**
 
 - **类型**: 事实验证数据集
+- **测试指标：** accurate
 - **描述**: FEVER 数据集用于事实验证任务，包含人类编写的句子和相应的维基百科证据，任务是判断陈述是否为真、假或无证据支持。这是构建文本推理和事实验证模型的重要资源。
 - **应用场景**: 事实验证、信息检索和文档级别的证据发现。
 
@@ -172,11 +175,13 @@ This repository contains the code and data about the project:
 
 ### 3. **HotpotQA**
 
-- **类型**: 多跳问答数据集（短答案）
+- **类型**: 多跳问答数据集（短答案），abstractive generation(answers o do not always appear in the ground-truth supporting documents P)
+- **测试指标：** uni-gram F1
 - **描述**: HotpotQA 是一个多跳问答数据集，要求系统从多个文档中提取相关信息来回答问题。与其他问答数据集不同，HotpotQA 特别关注问题需要跨越多个文档或段落才能得出答案。
 - **应用场景**: 用于训练和评估需要多跳推理的问答模型。
 
   ```json
+
   [
       {
           "question": "What year did Guns N Roses perform a promo for a movie starring Arnold Schwarzenegger as a former New York Police detective?",
@@ -257,9 +262,24 @@ This repository contains the code and data about the project:
   ]
   ```
 
+这个数据集里问题的答案是通过**多跳推理**（multi-hop reasoning）从多个参考文档中找出来的。多跳推理是一种需要从不同来源逐步获得信息并进行整合的过程。我们来看这个例子：
+
+##### 问题：Were Scott Derrickson and Ed Wood of the same nationality?
+
+1. **问题的要求**：判断Scott Derrickson和Ed Wood是否属于同一个国籍。这需要了解他们各自的国籍。
+2. **提供的文档**：这里列出的文档内容并不直接提供Scott Derrickson和Ed Wood的国籍信息，但我们仍然可以使用它们的结构或与国籍相关的部分进行推理。
+3. **多跳推理**：
+
+   - **第一个跳跃**：系统需要找到Scott Derrickson的国籍。虽然提供的文档并没有直接给出Scott Derrickson的信息，但可以通过在知识库（如Wikipedia）中的相关内容找到他的国籍。Scott Derrickson是美国人。
+   - **第二个跳跃**：然后，系统需要找到Ed Wood的国籍。同样，通过查阅知识库中的Ed Wood条目，可以得知他也是美国人。
+4. **最终答案**：两者的国籍都是美国，因此答案是“**Yes**”。
+
+**多跳推理的作用**是，当答案涉及多个实体（如Scott Derrickson和Ed Wood）时，系统会依次从多个文档中提取相关信息，将它们组合起来，形成完整的推理链条，从而得出结论。
+
 ### 4. **NQ (Natural Questions)**
 
-- **类型**: 开放域问答数据集
+- **类型**: 开放域问答数据集（ODQA)，extracion
+- **评价标准：** EM
 - **描述**: Natural Questions 是谷歌发布的问答数据集，问题来自真实的 Google 搜索查询，答案通常嵌入在维基百科文档中。任务是从提供的文档中找到问题的答案。
 - **应用场景**: 用于开放域问答和长文档中的信息检索。
 
@@ -302,7 +322,8 @@ This repository contains the code and data about the project:
 
 ### 5. **TQA (Textbook Question Answering)**
 
-- **类型**: 教材问答数据集
+- **类型**: 教材问答数据集(ODQA)，span extraction
+- **评价标准：** EM
 - **描述**: TQA 数据集包含来自中学科学教材的图表和文本，问题要求对课文中的内容进行推理。模型需要综合多种信息源来回答问题，这使得它成为多模态理解和推理的理想数据集。
 - **应用场景**: 用于教育相关的问答模型，尤其是涉及多模态推理的任务。
 
@@ -358,7 +379,9 @@ This repository contains the code and data about the project:
 
 ### 6. **WoW (Wizard of Wikipedia)**
 
-- **类型**: 对话生成数据集
+- **类型**: 对话生成数据集。  generate
+- **数据：** In each example, the input q is the conversation history involving multiple utterance turns, and the next-turn response is the output o.
+- **评价标准：** unigram F1-score
 - **描述**: WoW 数据集用于训练模型生成具有丰富知识的对话。它包含基于维基百科知识的开放域对话，模型在回答问题时需要引用背景知识，提供连贯的、信息丰富的回答。
 - **应用场景**: 用于对话生成，特别是知识增强型对话系统。
 
