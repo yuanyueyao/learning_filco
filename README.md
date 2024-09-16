@@ -264,7 +264,7 @@ This repository contains the code and data about the project:
 
 这个数据集里问题的答案是通过**多跳推理**（multi-hop reasoning）从多个参考文档中找出来的。多跳推理是一种需要从不同来源逐步获得信息并进行整合的过程。我们来看这个例子：
 
-**问题：**Were Scott Derrickson and Ed Wood of the same nationality?
+**问题：** Were Scott Derrickson and Ed Wood of the same nationality?
 
 1. **问题的要求**：判断Scott Derrickson和Ed Wood是否属于同一个国籍。这需要了解他们各自的国籍。
 2. **提供的文档**：这里列出的文档内容并不直接提供Scott Derrickson和Ed Wood的国籍信息，但我们仍然可以使用它们的结构或与国籍相关的部分进行推理。
